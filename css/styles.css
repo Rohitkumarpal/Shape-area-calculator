@@ -1,0 +1,123 @@
+body {
+    background: #f5f6f7;
+    font-family: "Nunito", sans-serif;
+    width: 100vw;
+}
+
+.header {
+    width: 100vw;
+}
+
+.header img {
+    width: 100%;
+    display: block;
+    height: auto;
+}
+
+.img-responsive {
+    width: 100vw;
+}
+
+main {
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    position: relative;
+}
+
+.left-container {
+    width: 40%;
+    padding: 16px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+.stepper {
+    width: 40%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: auto;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 8px;
+    padding: 8px;
+}
+
+.vertical-banner {
+    width: 15%;
+    display: flex;
+    margin-left: 5%;
+    margin-right: 10%;
+    margin-top: 5%;
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+
+.vertical-banner span {
+    text-align: center;
+}
+
+.content {
+    text-align: left;
+}
+
+.radioLeft {
+    display: block;
+    text-align: left;
+}
+
+.button-success {
+    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    /* display: flex; */
+    /* font-size: 16px; */
+    justify-content: center;
+    padding: 0.5rem .75rem;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-success:hover {
+    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+}
+
+.button-cancle {
+    background-color: initial;
+    background-image: linear-gradient(-180deg, #FF7E31, #E62C03);
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    z-index: 9;
+    border: 0;
+    transition: box-shadow .2s;
+    padding: 0.5rem .75rem;
+}
+
+.button-cancle:hover {
+    box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
+}
+
+p {
+    font-size: 18px;
+}
