@@ -1,2 +1,2 @@
 # Shape-area-calculator
-It will calculate are of selected shape
+It will calculate area of selected shape
