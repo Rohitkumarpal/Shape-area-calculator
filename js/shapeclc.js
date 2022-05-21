@@ -239,7 +239,7 @@ var gotostep3 = document.querySelector("#calcBtn");
 
 var areagEl = document.querySelector("#area");
 
-//bind a function tothe onClick event the AddBtn
+//bind a function to the onClick event  Go To Step3 button
 gotostep3.onclick = function() {
 
     if (selectedShape == 'ellipse') {
