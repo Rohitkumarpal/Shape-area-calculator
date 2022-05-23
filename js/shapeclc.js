@@ -1,175 +1,27 @@
-class shapeCalculator {
 
-    constructor(minorAxis, majorAxis, lenght, width, side, radius) {
-        this.minorAxis = Number(minorAxis)
-        this.majorAxis = Number(majorAxis)
-        this.lenght = Number(lenght)
-        this.width = Number(width)
-        this.side = Number(side)
-        this.radius = Number(radius)
-        this.PI = 3.14
+import { getRectangleArea, getCircleArea, getSquareArea, getellipseArea } from './shapearea.js';
+var shapeList = [{ id: 'rectangle', shapeName: "Rectangle" },
+{ id: 'circle', shapeName: "Circle" },
+{ id: 'square', shapeName: "Square" },
+{ id: 'ellipse', shapeName: "Ellipse" }
 
-    }
-    getRectangleArea() {
-
-        return this.lenght * this.width
-
-    }
-
-    getCircleArea() {
-
-        return this.PI * this.radius * this.radius
-
-    }
-
-    getSquareArea() {
-
-        console.log('this.side * this.side', this.side * this.side)
-        return this.side * this.side
-
-    }
-    getellipseArea() {
-
-        return this.PI * this.minorAxis * this.majorAxis
-
-    }
-
-
-
-}
-
+]
 var selectedShape = ''
-var totalAreaOfSelectedShape = 0;
-var minorAxis
-var majorAxis
-var length;
-var width;
-var side;
-var radius;
+var shapeListIds = document.querySelector('#shapeList');
 
-
-
-function onchangeRadioButton(event) {
-    selectedShape = event.target.value
-}
-
-function addFields(selectedShape) {
-
-    // Get the element where the inputs will be added to
-    var container = document.getElementById("inputFileds");
-    // Remove every children it had before
-    while (container.hasChildNodes()) {
-        container.removeChild(container.lastChild);
-    }
-    // Generate a dynamic number of inputs
-    var number = 1
-    switch (selectedShape) {
-        case "rectangle":
-            number = 2
-            for (i = 0; i < number; i++) {
-                if (i == 0) {
-                    getFileds(container, "Length")
-                } else {
-                    getFileds(container, "Width")
-                }
-            }
-
-            break;
-        case "circle":
-            number = 1
-            for (i = 0; i < number; i++) {
-                getFileds(container, "Radius")
-            }
-
-            break;
-        case "square":
-            number = 1
-            for (i = 0; i < number; i++) {
-                getFileds(container, "Side")
-            }
-
-            break;
-
-        case "ellipse":
-
-            number = 2
-
-            for (i = 0; i < number; i++) {
-                if (i == 0) {
-                    getFileds(container, "Major-Axis")
-                } else {
-                    getFileds(container, "Minor-Axis")
-                }
-            }
-
-            break;
-
-        default:
-            break;
-
-    }
-
-
-
-
-
-}
-
-function getFileds(container, labelName) {
-
-
-    // Append a node with labelName
-    var l = document.createElement("LABEL");
-    l.innerHTML = labelName
-    container.appendChild(l);
-    // Create an <input> element, set its type and name attributes
-    var input = document.createElement("input");
-    input.type = "text";
-    input.name = labelName;
-    input.id = labelName
-    container.appendChild(input);
-    // Append a line break 
-    container.appendChild(document.createElement("br"));
-
-
-}
-
-function calculateArea(selectedShape, ) {
-
-    cl = new shapeCalculator(minorAxis, majorAxis, length, width, side, radius)
-
-    switch (selectedShape) {
-        case "rectangle":
-
-            totalAreaOfSelectedShape = cl.getRectangleArea().toFixed(2)
-
-            break;
-        case "circle":
-
-            totalAreaOfSelectedShape = cl.getCircleArea().toFixed(2)
-
-            break;
-        case "square":
-
-            totalAreaOfSelectedShape = cl.getSquareArea().toFixed(2)
-
-            break;
-
-        case "ellipse":
-
-            totalAreaOfSelectedShape = cl.getellipseArea().toFixed(2)
-
-            break;
-
-        default:
-            break;
-
-
-    }
-
-    return totalAreaOfSelectedShape;
-
-}
+for (let i = 0; i < shapeList.length; i++) {
+    let label = document.createElement('label');
+    label.textContent = shapeList[i].shapeName + "\n";
+    shapeListIds.appendChild(label);
+    let radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = "shape";
+    radio.value = shapeList[i].id;
+    radio.id= shapeList[i].id
+    shapeListIds.appendChild(radio);
+    let linebreak = document.createElement('br');
+    shapeListIds.appendChild(linebreak);
+};
 
 
 
@@ -180,7 +32,6 @@ gotostep2.addEventListener("click", () => {
         console.log(radioButton.checked, radioButtons)
         if (radioButton.checked) {
             selectedShape = radioButton.value;
-            addFields(selectedShape)
             showSecondStep()
             break;
         }
@@ -195,20 +46,6 @@ gotostep2.addEventListener("click", () => {
     output.innerText = selectedShape ? `You have selected a ${selectedShape}` + " please input the required variables" : `You haven't selected any shape`;
 });
 
-const canclebtn = document.querySelector('#cancle');
-canclebtn.addEventListener("click", () => {
-
-    for (const radioButton of radioButtons) {
-        if (radioButton.checked) {
-            radioButton.checked = false
-            selectedShape = radioButton.value;
-            break;
-        }
-    }
-
-
-
-});
 
 const canclestep2 = document.querySelector('#canclestep2');
 canclestep2.addEventListener("click", () => {
@@ -223,13 +60,6 @@ canclestep2.addEventListener("click", () => {
             break;
         }
     }
-    minorAxis = null
-    majorAxis = null
-    length = null
-    width = null
-    side = null
-    radius = null
-    totalAreaOfSelectedShape = 0;
 
 })
 
@@ -240,43 +70,45 @@ var gotostep3 = document.querySelector("#calcBtn");
 var areagEl = document.querySelector("#area");
 
 //bind a function to the onClick event  Go To Step3 button
-gotostep3.onclick = function() {
+gotostep3.onclick = function () {
 
-    if (selectedShape == 'ellipse') {
-        majorAxis = document.querySelector("#Minor-Axis").value;
-        majorAxis = document.querySelector("#Major-Axis").value;
+    let x = document.querySelector("#x-axis") ? document.querySelector("#x-axis").value : null;
+    let y = document.querySelector("#y-axis") ? document.querySelector("#y-axis").value : null;
+    let area = 0;
 
-        showLastStep()
 
-        area = calculateArea(selectedShape)
-            //write the results into #area  document 
-        areagEl.innerHTML = " You have selected a " + selectedShape + " with Minor-Axis" + minorAxis + " and Major-Axis" + majorAxis + " The area is " + selectedShape + ":" + area;
+    switch (selectedShape) {
+        case "rectangle":
 
-    } else if (selectedShape == 'rectangle') {
-        length = document.querySelector("#Length").value;
-        width = document.querySelector("#Width").value;
-        showLastStep()
+            area = getRectangleArea(x, y).toFixed(2)
+            areagEl.innerHTML = " You have selected a " + selectedShape + " with Length " + x + " and Width" + y + " The area is " + selectedShape + ":" + area;
+            showLastStep()
+            break;
+        case "circle":
 
-        area = calculateArea(selectedShape)
-            //write the results into #area  document 
-        areagEl.innerHTML = " You have selected a " + selectedShape + " with Length " + length + " and Width" + width + " The area is " + selectedShape + ":" + area;
-    } else if (selectedShape == 'square') {
-        side = document.querySelector("#Side").value;
-        showLastStep()
+            area = getCircleArea(x).toFixed(2)
+            areagEl.innerHTML = " You have selected a " + selectedShape + " with Radius " + x + " The area is " + selectedShape + ":" + area;
+            showLastStep()
+            break;
+        case "square":
 
-        area = calculateArea(selectedShape)
-            //write the results into #area  document 
-        areagEl.innerHTML = " You have selected a " + selectedShape + " with Side " + side + " The area is " + selectedShape + ":" + area;
-    } else if (selectedShape == 'circle') {
-        radius = document.querySelector("#Radius").value;
-        showLastStep()
+            area = getSquareArea(x).toFixed(2)
+            areagEl.innerHTML = " You have selected a " + selectedShape + " with Side " + x + " The area is " + selectedShape + ":" + area;
+            showLastStep()
+            break;
 
-        area = calculateArea(selectedShape)
-            //write the results into #area document 
-        areagEl.innerHTML = " You have selected a " + selectedShape + " with Radius " + radius + " The area is " + selectedShape + ":" + area;
+        case "ellipse":
+
+            area = getellipseArea(x, y).toFixed(2)
+            areagEl.innerHTML = " You have selected a " + selectedShape + " with Minor-Axis" + x + " and Major-Axis" + y + " The area is " + selectedShape + ":" + area;
+            showLastStep()
+            break;
+
+        default:
+            break;
+
+
     }
-
-
 }
 
 const startover = document.querySelector('#startover');
@@ -287,10 +119,22 @@ startover.addEventListener("click", () => {
 
 })
 
+function showInputFileds() {
+    shapeList.forEach(element => {
+        if (selectedShape == element.id) {
+            document.querySelector("#" + element.id + "InputFileds").style.display = 'block'
+        } else {
+            document.querySelector("#" + element.id + "InputFileds").style.display = 'none'
+
+        }
+    });
+}
+
 function showSecondStep() {
     document.getElementById('step1').style.display = "none";
     document.getElementById('step3').style.display = "none";
     document.getElementById('step2').style.display = "block";
+    showInputFileds()
 }
 
 function showLastStep() {
